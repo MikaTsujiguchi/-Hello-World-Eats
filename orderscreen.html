@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>myMemoPad</title>
+  <script src="js/jquery-2.1.3.min.js"></script>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('.slider').bxSlider({
+                auto: true,
+                pause: 5000,
+            });
+        });
+</script>
+
+</head>
+
+<body>
+  
+  <img src="./img/orderscreentitle1.png" id="order1" width="1200">
+  <img src="./img/orderscreentitle2.png" id="order2" width="1000">
+
+  <div class="slider">
+    <img src="./img/1.png" width="1500" height="800" alt="">
+    <img src="./img/2.png" width="1500" height="800" alt="">
+    <img src="./img/3.png" width="1500" height="800" alt="">
+    <img src="./img/4.png" width="1500" height="800" alt="">
+    <img src="./img/5.png" width="1500" height="800" alt="">
+  </div>
+
+  <main>
+    <div class="input-area">
+      <input list="drink" id="cat1" placeholder=" Select Your Drink  "/>
+
+      <datalist id="drink">
+        <option value="Coffee"></option>
+        <option value="Tea"></option>
+        <option value="Strawberry Smoothie"></option>
+        <option value="Matcha Latte"></option>
+        <option value="Oolong Tea"></option>
+      </datalist>
+      
+      <input list="size" id="cat2" placeholder=" Which Size Do You Want?  "/>
+      
+      <datalist id="size">
+        <option value="Short"></option>
+        <option value="Tall"></option>
+        <option value="Grande"></option>
+        <option value="Venti"></option>
+      </datalist>
+
+      <!-- <input list="topping" id="cat3" name="ice-cream-choice" />
+
+      <datalist id="topping">
+        <option value="Whipped Cream"></option>
+        <option value="Vanilla Syrup"></option>
+        <option value="Caramel Sauce"></option>
+        <option value="Ice Cream"></option>
+        <option value="Lemon Slice"></option>
+        <option value="None"></option>
+      </datalist> -->
+
+ </div>
+
+    <div class="button-area">
+      <button id="save"><img src="./img/updatecart.png" alt="" width="500"></button>
+      <button id="clear"><img src="./img/emptycart.png" alt="" width="500"></button>
+    </div>
+  </main>
+
+  <ul id="list">
+    <!-- ここに追加データが挿入される -->
+  </ul>
+
+      <button id="checkout" onclick="location.href='./thankyou.html'"><img src="./img/checkout.png" alt="" width="500"></button>
+  
+  <!-- 以下にjsを書いていきます -->
+  <script>
+
+    //1.Save クリックイベント
+    $("#save").on("click", function () {
+      const key = $("#cat1").val();
+      const value = $("#cat2").val();
+
+      var totalprice = ""
+      var price_cat1 = ""
+      var price_cat2 = ""
+
+      if (key==="Coffee"){
+
+      price_cat1 = 300
+      }
+
+      if (key==="Tea"){
+
+      price_cat1 = 250
+      }
+
+      if (key==="Strawberry Smoothie"){
+
+      price_cat1 = 400
+      }
+      if (key==="Oolong Tea"){
+
+            price_cat1 = 400
+      }       
+
+      if (key==="Matcha Latte"){
+
+            price_cat1 = 400
+      }       
+
+
+      if (value==="Short"){
+      price_cat2 = 1
+
+      }
+      if (value==="Tall"){
+      price_cat2 = 1.2
+
+      }
+      if (value==="Grande"){
+      price_cat2 = 1.3
+
+      }
+      if (value==="Venti"){
+      price_cat2 = 1.5
+
+      }
+
+
+      totalprice = price_cat1 * price_cat2
+            
+            
+            localStorage.setItem(key, value);
+            const html = `
+            <li class="list">
+              <p>Drink:  ${key}</p>
+              <p>Size:   ${value}</p>
+            
+              <p id="price">Price  ${totalprice}</p>
+            </li>
+          `;
+            $("#list").append(html);
+            
+            $("#cat1").val("");
+            $("#cat2").val("");
+            
+
+          });
+
+
+
+    //2.clear クリックイベント
+    $("#clear").on("click", function () {
+      localStorage.clear();
+      $("#list").empty();
+    });
+
+    $("#checkout").on("click", function () {
+      localStorage.clear();
+      $("#list").empty();
+    });
+
+
+    //3.ページ読み込み：保存データ取得表示
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(key);
+
+      var totalprice = ""
+      var price_cat1 = ""
+      var price_cat2 = ""
+      
+
+      if (key==="Coffee"){
+
+            price_cat1 = 300
+      }
+
+      if (key==="Tea"){
+
+            price_cat1 = 250
+      }
+
+      if (key==="Strawberry Smoothie"){
+
+            price_cat1 = 400
+      }
+      if (key==="Oolong Tea"){
+
+            price_cat1 = 400
+      }     
+
+      if (key==="Matcha Latte"){
+
+            price_cat1 = 400
+      }     
+
+
+      if (value==="Short"){
+            price_cat2 = 1
+            
+      }
+      if (value==="Tall"){
+            price_cat2 = 1.2
+            
+      }
+      if (value==="Grande"){
+            price_cat2 = 1.3
+            
+      }
+      if (value==="Venti"){
+            price_cat2 = 1.5
+            
+      }
+
+      
+      totalprice = price_cat1 * price_cat2
+  
+      const html = `
+      
+      <li class="list">
+        <p>Drink:  ${key}</p>
+        <p>Size:   ${value}</p>
+        
+        <p id="price">Price  ${totalprice}</p>
+       
+      </li>
+    `;
+      $("#list").append(html);
+    }
+
+  </script>
+   
+</body>
+
+</html>
